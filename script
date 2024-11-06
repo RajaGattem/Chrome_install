@@ -1,0 +1,37 @@
+     #!/bin/bash
+
+# Update package list
+echo "Updating package list..."
+sudo apt-get update -y
+
+# Install dependencies (if not already installed)
+echo "Installing dependencies..."
+sudo apt-get install -y wget apt-transport-https ca-certificates curl
+
+# Add Google's signing key to ensure package authenticity
+echo "Adding Google's signing key..."
+curl -fsSL https://dl.google.com/linux/linux_signing_key.pub | sudo tee /etc/apt/trusted.gpg.d/google.asc
+
+# Add Google Chrome repository to APT sources
+echo "Adding Google Chrome repository..."
+echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
+
+# Update package list again to include Google Chrome repo
+echo "Updating package list after adding Google repo..."
+sudo apt-get update -y
+
+# Install Google Chrome stable version
+echo "Installing Google Chrome..."
+sudo apt-get install -y google-chrome-stable
+
+# Check if Google Chrome was installed successfully
+if which google-chrome > /dev/null 2>&1; then
+    echo "Google Chrome has been installed successfully!"
+else
+    echo "There was an error during the installation of Google Chrome."
+fi
+
+
+
+#copy the script into $vim chrome_installation_script.sh
+#now run the script   $sh chrome_installation.script.sh
